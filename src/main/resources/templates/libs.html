@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Libs</title>
+</head>
+<body>
+
+<div>
+    <ul>
+        <li th:each="lib : ${libs}">
+            <a th:href="@{/lib/{id}(id=${lib})}" th:text="${lib}" />
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
