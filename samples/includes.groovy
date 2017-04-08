@@ -1,4 +1,4 @@
-
+import WeatherAPI
 
 def weather = WeatherAPIBuilder.build('http://api.openweathermap.org')
 
