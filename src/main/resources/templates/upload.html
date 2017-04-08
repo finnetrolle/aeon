@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="script" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+
+<div>
+    <ul>
+        <li th:each="script : ${scripts}">
+            <a th:href="@{/exec/{id}(id=${script.name})}" th:text="${script.name}" /><p th:text="${script.code}">ololo</p>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
