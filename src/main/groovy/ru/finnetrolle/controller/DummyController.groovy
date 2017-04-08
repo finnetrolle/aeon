@@ -30,22 +30,18 @@ class DummyController {
             @RequestParam("script") MultipartFile script,
             RedirectAttributes attributes) {
 
-        String sc = new String(script.bytes, 'UTF-8')
-        String name = script.originalFilename
+        engine.add(script.originalFilename, script.bytes)
 
-        engine.addScript(name, sc)
-
-        attributes.addFlashAttribute('message', "Uploaded: ${name}")
+        attributes.addFlashAttribute('message', "Uploaded: ${script.originalFilename}")
 
         "redirect:/"
     }
 
     @RequestMapping("/exec/{scriptname:.+}")
     String exec(@PathVariable String scriptname, Model model) {
-        def script = engine.get(scriptname)
-        def shell = new GroovyShell()
-        model.addAttribute('name', script.name)
-        model.addAttribute('result', shell.evaluate(script.code))
+        def result = engine.exec(scriptname)
+        model.addAttribute('name', scriptname)
+        model.addAttribute('result', result)
         "done"
     }
 

@@ -17,7 +17,7 @@
 <div>
     <ul>
         <li th:each="script : ${scripts}">
-            <a th:href="@{/exec/{id}(id=${script.name})}" th:text="${script.name}" /><p th:text="${script.code}">ololo</p>
+            <a th:href="@{/exec/{id}(id=${script})}" th:text="${script}" />
         </li>
     </ul>
 </div>

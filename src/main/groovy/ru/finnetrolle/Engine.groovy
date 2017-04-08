@@ -7,23 +7,24 @@ import javax.annotation.PostConstruct
 @Component
 class Engine {
 
-    private Map<String, Script> scripts = [:]
+    public static final String HOME = "./scripts/"
+    private GroovyScriptEngine engine = new GroovyScriptEngine([HOME, "./libs/"] as String[])
 
-    void addScript(String name, String script) {
-        scripts.put(name, new Script(name, script))
+    void add(String name, byte[] code) {
+        def encodedName = UUID.randomUUID().toString()
+        new File("${HOME}${encodedName}").setText(new String(code, 'UTF-8'),'UTF-8')
+        scripts.put(name, encodedName)
     }
 
-    List<Script> all() {
-        scripts.values().toList()
+    private Map<String, String> scripts = [:]
+
+    List<String> all() {
+        scripts.keySet().toList()
     }
 
-    Script get(String name) {
-        scripts.get(name)
+    String exec(String name) {
+        def binding = new Binding()
+        def script = engine.run(scripts.get(name), binding)
+        script
     }
-
-    @PostConstruct
-    void init() {
-        addScript("myname", "def a = 'Maks!'\na")
-    }
-
 }
