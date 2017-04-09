@@ -1,6 +1,8 @@
 package ru.finnetrolle
 
+import groovy.transform.Immutable
 import org.springframework.stereotype.Component
+import groovy.json.JsonSlurper
 
 import javax.annotation.PostConstruct
 
@@ -35,5 +37,21 @@ class Engine {
         def binding = new Binding()
         def script = engine.run(scripts.get(name), binding)
         script
+    }
+
+    FastExecResult fastExec(String code, String json) {
+        def encodedName = UUID.randomUUID().toString()
+        new File("${SPRIPTS}${encodedName}").setText(code,'UTF-8')
+        def binding = new Binding()
+        binding.setVariable('json', new JsonSlurper().parseText(json))
+        def script = engine.run(encodedName, binding)
+        def result = binding.getVariable('result') as String
+        return new FastExecResult(code: code, json: json, result: result)
+    }
+
+    @Immutable class FastExecResult {
+        String code
+        String json
+        String result
     }
 }

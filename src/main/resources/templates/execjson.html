@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/exec">
+        <table>
+            <tr><td>Script:</td><td><input type="file" name="script" /></td></tr>
+            <tr><td>JSON:</td><td><input type="file" name="json" /></td></tr>
+            <tr><td></td><td><input type="submit" value="execute" /></td></tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>

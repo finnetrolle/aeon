@@ -29,11 +29,8 @@ class DummyController {
     String upload(
             @RequestParam("script") MultipartFile script,
             RedirectAttributes attributes) {
-
         engine.add(script.originalFilename, script.bytes)
-
         attributes.addFlashAttribute('message', "Uploaded: ${script.originalFilename}")
-
         "redirect:/"
     }
 
@@ -44,5 +41,20 @@ class DummyController {
         model.addAttribute('result', result)
         "done"
     }
+
+    @RequestMapping(path = "/exec", method = RequestMethod.POST)
+    String execJson(@RequestParam("script") MultipartFile script,
+                    @RequestParam("json") MultipartFile json,
+                    Model model) {
+        def result = engine.fastExec(new String(script.bytes, 'UTF-8'),
+                                        new String(json.bytes, 'UTF-8'))
+        model.addAttribute('result', result)
+        model.addAttribute('name', script.originalFilename)
+        "done2"
+    }
+
+    @RequestMapping("/special")
+    String special() {"execjson"}
+
 
 }

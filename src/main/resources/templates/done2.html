@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Done!</title>
+</head>
+<body>
+<h3 th:text="${name}">A Smoke Test</h3>
+<a th:href="@{/}">Back</a>
+<pre th:text="${result.code}"></pre>
+<h3>Input</h3>
+<pre th:text="${result.json}"></pre>
+<h3>Output</h3>
+<pre th:text="${result.result}">ololo</pre>
+</body>
+</html>
